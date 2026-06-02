@@ -199,15 +199,16 @@ pipeline {
             }
         }
 
-        // =====================================================================
-        // Docker — Build images
-        // =====================================================================
+       // =====================================================================
+       // Docker — Build images
+       // =====================================================================
         stage('Docker Build') {
             parallel {
                 stage('Build App Image') {
                     steps {
                         sh '''
                             docker build \
+                                --platform linux/amd64 \
                                 -f demo/app-springboot/Dockerfile \
                                 -t ${APP_IMAGE}:${IMAGE_TAG} \
                                 -t ${APP_IMAGE}:latest \
@@ -221,6 +222,7 @@ pipeline {
                     steps {
                         sh '''
                             docker build \
+                                --platform linux/amd64 \
                                 -f demo/service-springboot-rest/Dockerfile \
                                 -t ${SVC_IMAGE}:${IMAGE_TAG} \
                                 -t ${SVC_IMAGE}:latest \
